@@ -4,11 +4,6 @@
 
 	module.exports = {
 		imdb: function(title){
-			if (title != undefined){
-				var title = title;
-			} else {
-				var title = "Mr. Nobody";
-			}
 				
 			var request = require("request");
 			request("http://www.omdbapi.com/?t="+title+"&y=&plot=short&apikey=40e9cece", function(err,resp,body){

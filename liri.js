@@ -3,29 +3,46 @@
 (function (){
 	//command var
 	var op = process.argv[2];
-	var userArg = process.argv[3];
-
-	//Twitter keys
-	var keys = require("./keys.js");
-	var consKey = keys.twitterKeys.consumer_key;
-	var consSec = keys.twitterKeys.consumer_secret;
-	var accTok = keys.twitterKeys.access_token_key;
-	var accSec = keys.twitterKeys.access_token_secret;
-
+	
 	switch (op) {
 		case "my-tweets":
-			// https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2
+			var tweets = require("./twitter.js");
+			tweets.twitter();
+			break;
 		case "spotify-this-song":
-
+			var userArg = process.argv[3] || "the sign ace of base";
+			var spotify = require("./spotify.js");
+			spotify.spotify(userArg);
+			break;
 		case "movie-this":
-
+			var userArg = process.argv[3] || "Mr. Nobody";
 			var omdb = require("./imdb.js");
-
 			omdb.imdb(userArg);
 			break;
-
 		case "do-what-it-says":
+			var fs = require("fs");
+			fs.readFile("random.txt", "utf8", function(err, data){
+				var com = data.split(",")
+				op = com[0];
+				userArg = com[1];
+				
+				switch (op) {
+					case "my-tweets":
+						var tweets = require("./twitter.js");
+						tweets.twitter();
+						break;
+					case "spotify-this-song":
+						var spotify = require("./spotify.js");
+						spotify.spotify(userArg);
+						break;
+					case "movie-this":
+						var omdb = require("./imdb.js");
+						omdb.imdb(userArg);
+						break;
+				}//end of switch
+			})//end of read
 
+			break;
 		case undefined:
 			var instArray = ["The following are a list of commands that are allowed:",
 								"liri.js my-tweets", "liri.js spotify-this-song", 
@@ -38,3 +55,4 @@
 	}//end of switch
 	// console.log(keys.twitterKeys);
 })();//end of main
+
