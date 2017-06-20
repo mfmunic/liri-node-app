@@ -23,7 +23,7 @@
 			var params = {screen_name: "knot_marc"};
 			client.get('statuses/user_timeline', params, function(error, tweets, response) {
 			  if (!error) {
-			  	for (var i = 0; i<tweets.length; i++){
+			  	for (var i = tweets.length-1; i>=0; i--){
 			  		var dateArray = tweets[i].created_at.split(" ");
 			    	console.log(dateArray[2] + dateArray[1] + dateArray[5] + " " + dateArray[3] + " " + tweets[i].text);
 			    }
